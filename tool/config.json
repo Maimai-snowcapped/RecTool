@@ -1,0 +1,5 @@
+{
+    "ffmpeg_path": "C:/ffmpeg/bin/ffmpeg.exe",
+    "output_dir": "output",
+    "video_filename": "video"
+}
