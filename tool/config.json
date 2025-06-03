@@ -1,5 +1,7 @@
 {
     "ffmpeg_path": "C:/ffmpeg/bin/ffmpeg.exe",
     "output_dir": "output",
-    "video_filename": "video"
+    "video_filename": "video",
+    "start_key": "F9",
+    "stop_key": "F10"
 }
