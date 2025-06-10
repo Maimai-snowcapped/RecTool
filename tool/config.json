@@ -1,7 +1,9 @@
 {
-    "ffmpeg_path": "C:/ffmpeg/bin/ffmpeg.exe",
-    "output_dir": "output",
-    "video_filename": "video",
-    "start_key": "F9",
-    "stop_key": "F10"
+  "ffmpeg_path": "C:/ffmpeg/bin/ffmpeg.exe",
+  "output_dir": "output",
+  "video_filename": "video",
+  "start_key": "F9",
+  "stop_key": "F10",
+  "mouse_move_threshold": 5,
+  "mouse_time_threshold": 0.05
 }

@@ -1,13 +1,26 @@
 from pynput import keyboard, mouse
 import time
 import sys
+import json
 
 start_time = float(sys.argv[1])
 output_path = sys.argv[2]
 
+# 从config.json读取配置
+with open('config.json', 'r') as f:
+    config = json.load(f)
+
 # 添加组合键状态跟踪
 current_keys = set()
 last_x, last_y = None, None
+# 新增累积位移变量
+accumulated_dx = 0
+accumulated_dy = 0
+# 设置位移阈值(像素)
+MOVE_THRESHOLD = config.get("mouse_move_threshold", 5)
+# 新增时间阈值(秒)
+TIME_THRESHOLD = config.get("mouse_time_threshold", 0.05)
+last_move_time = 0
 
 def log_event(event):
     timestamp = time.time() - start_time
@@ -33,15 +46,27 @@ def on_release(key):
     log_event(f"KeyUp: {key}")
 
 def on_move(x, y):
-    global last_x, last_y
-    log_event(f"MouseMoveAbsolute: ({x}, {y})")
+    global last_x, last_y, accumulated_dx, accumulated_dy, last_move_time
     
-    # 计算相对移动量
-    if last_x is not None and last_y is not None:
-        dx = x - last_x
-        dy = y - last_y
-        if dx != 0 or dy != 0:  # 只记录有实际移动的情况
-            log_event(f"MouseMoveRelative: ({dx}, {dy})")
+    current_time = time.time()
+    # 记录绝对坐标
+    # log_event(f"MouseMoveAbsolute: ({x}, {y})")
+    
+    # 只有当超过时间阈值时才处理相对位移
+    if current_time - last_move_time >= TIME_THRESHOLD:
+        if last_x is not None and last_y is not None:
+            dx = x - last_x
+            dy = y - last_y
+            
+            accumulated_dx += dx
+            accumulated_dy += dy
+            
+            if abs(accumulated_dx) >= MOVE_THRESHOLD or abs(accumulated_dy) >= MOVE_THRESHOLD:
+                log_event(f"MouseMoveRelative: ({accumulated_dx}, {accumulated_dy})")
+                accumulated_dx = 0
+                accumulated_dy = 0
+        
+        last_move_time = current_time
     
     last_x, last_y = x, y
 
