@@ -21,6 +21,11 @@
 - 相对位移记录( MouseMoveRelative )现在同时受时间阈值(TIME_THRESHOLD)和位移阈值(MOVE_THRESHOLD)控制
 - 只有当两次移动的时间间隔超过 50 毫秒(TIME_THRESHOLD)且累积位移超过 5 像素(MOVE_THRESHOLD)时，才会记录相对位移，可以根据实际需要调整这两个阈值参数。
 
+### 0.0.0 (2025-06-15)
+
+- 新增功能：支持自定义配置是否记录鼠标的绝对坐标
+- 优化功能：操作开始就记录时间戳，而不是操作完成后再记录
+
 ## 功能特性
 
 - 录制屏幕为 MP4 视频
@@ -29,6 +34,7 @@
 - 自动生成带时间戳的输出文件
 - 支持自定义输出目录和文件名
 - 支持用户自定义配置开始和停止录制的按键
+- 支持自定义配置是否记录鼠标的绝对坐标
 
 ## 安装指南
 
@@ -84,7 +90,8 @@ start_record.bat
   "start_key": "F9",
   "stop_key": "F10",
   "mouse_move_threshold": 5,
-  "mouse_time_threshold": 0.05
+  "mouse_time_threshold": 0.05,
+  "log_absolute_position": false
 }
 ```
 
@@ -95,6 +102,7 @@ start_record.bat
 - `stop_key` : 停止录制的按键，默认为 F10
 - `mouse_move_threshold` : 鼠标移动的位移阈值，单位为像素，默认为 5
 - `mouse_time_threshold` : 鼠标移动的时间阈值，单位为秒，默认为 0.05
+- `log_absolute_position` : 是否记录鼠标的绝对坐标，默认为 false
 
 ## 输出文件
 

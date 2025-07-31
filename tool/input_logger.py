@@ -31,6 +31,7 @@ def log_event(event):
         print(f"Error writing to log file: {e}")
 
 def on_press(key):
+    timestamp = time.time() - start_time
     current_keys.add(key)
     try:
         log_event(f"KeyDown: {key.char}")
@@ -49,8 +50,12 @@ def on_move(x, y):
     global last_x, last_y, accumulated_dx, accumulated_dy, last_move_time
     
     current_time = time.time()
-    # 记录绝对坐标
-    # log_event(f"MouseMoveAbsolute: ({x}, {y})")
+    timestamp = current_time - start_time
+    
+    # 根据配置决定是否记录绝对坐标
+    if config.get("log_absolute_position", True):
+        log_event(f"MouseMoveAbsolute: ({x}, {y})")
+    
     
     # 只有当超过时间阈值时才处理相对位移
     if current_time - last_move_time >= TIME_THRESHOLD:

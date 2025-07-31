@@ -5,5 +5,6 @@
   "start_key": "F9",
   "stop_key": "F10",
   "mouse_move_threshold": 5,
-  "mouse_time_threshold": 0.05
+  "mouse_time_threshold": 0.05,
+  "log_absolute_position": false
 }
